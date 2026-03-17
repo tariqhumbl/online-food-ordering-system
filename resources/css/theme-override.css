@@ -1,0 +1,290 @@
+/**
+ * Dark theme override – must load after style.css.
+ * Uses both .pc-dark class and [data-pc-theme="dark"] so dark mode works on every page.
+ */
+/* Force dark when html has class or attribute (set by theme.js) */
+html.pc-dark,
+html[data-pc-theme="dark"] {
+  color-scheme: dark;
+  --bs-body-bg: #131920 !important;
+  --bs-body-bg-rgb: 19, 25, 32;
+  --bs-body-color: #bfbfbf !important;
+  --bs-body-color-rgb: 191, 191, 191;
+  --bs-heading-color: #fafafa;
+  --bs-border-color: #303f50;
+  --pc-heading-color: rgba(255, 255, 255, 0.8);
+  --pc-sidebar-background: #1d2630;
+  --pc-sidebar-color: #ffffff;
+  --pc-sidebar-color-rgb: 255, 255, 255;
+  --pc-sidebar-submenu-border-color: var(--bs-gray-600);
+  --pc-sidebar-caption-color: #748892;
+  --pc-header-background: rgba(19, 25, 32, 0.95);
+  --pc-header-color: #6f747f;
+  --pc-header-shadow: none;
+  --pc-active-background: #19212a;
+  --pc-card-box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.3);
+  --pc-header-submenu-background: #263240;
+  --pc-header-submenu-color: #bfbfbf;
+}
+
+/* Force body and main areas so dark always applies */
+html.pc-dark body,
+html[data-pc-theme="dark"] body {
+  background-color: #131920 !important;
+  color: #bfbfbf !important;
+}
+
+html.pc-dark #app,
+html.pc-dark .layout,
+html.pc-dark .pc-container,
+html.pc-dark .pc-content,
+html[data-pc-theme="dark"] #app,
+html[data-pc-theme="dark"] .layout,
+html[data-pc-theme="dark"] .pc-container,
+html[data-pc-theme="dark"] .pc-content {
+  background-color: #131920 !important;
+  color: #bfbfbf !important;
+}
+
+html.pc-dark .text-muted,
+[data-pc-theme="dark"] .text-muted {
+  color: #748892 !important;
+}
+
+html.pc-dark .card,
+[data-pc-theme="dark"] .card {
+  --bs-card-border-color: #303f50;
+  --bs-card-bg: #1b232d;
+  border-color: #303f50 !important;
+  background-color: #1b232d !important;
+  color: #bfbfbf !important;
+}
+
+html.pc-dark .pc-sidebar,
+[data-pc-theme="dark"] .pc-sidebar {
+  background: #1d2630 !important;
+  color: #ffffff !important;
+}
+
+html.pc-dark .pc-header,
+[data-pc-theme="dark"] .pc-header {
+  background: rgba(19, 25, 32, 0.95) !important;
+  color: #6f747f !important;
+}
+
+html.pc-dark .pc-content,
+html.pc-dark .pc-container,
+[data-pc-theme="dark"] .pc-content,
+[data-pc-theme="dark"] .pc-container {
+  background-color: #131920 !important;
+  color: #bfbfbf !important;
+}
+
+html.pc-dark .dropdown-menu,
+html[data-pc-theme="dark"] .dropdown-menu,
+[data-pc-theme="dark"] .dropdown-menu {
+  background-color: #1b232d !important;
+  border-color: #303f50;
+}
+
+html.pc-dark .list-group-item,
+html[data-pc-theme="dark"] .list-group-item,
+[data-pc-theme="dark"] .list-group-item {
+  background-color: #1b232d !important;
+  border-color: #303f50;
+  color: #bfbfbf !important;
+}
+
+html.pc-dark .form-control,
+html.pc-dark .form-select,
+html[data-pc-theme="dark"] .form-control,
+html[data-pc-theme="dark"] .form-select,
+[data-pc-theme="dark"] .form-control,
+[data-pc-theme="dark"] .form-select {
+  background-color: #19212a !important;
+  border-color: #303f50;
+  color: #bfbfbf !important;
+}
+
+html.pc-dark .table,
+html[data-pc-theme="dark"] .table,
+[data-pc-theme="dark"] .table {
+  --bs-table-bg: transparent;
+  --bs-table-color: #bfbfbf;
+  border-color: #303f50;
+}
+
+html.pc-dark .table thead th,
+html[data-pc-theme="dark"] .table thead th,
+[data-pc-theme="dark"] .table thead th {
+  background-color: #19212a !important;
+  border-color: #303f50;
+  color: #bfbfbf !important;
+}
+
+html.pc-dark .table tbody td,
+html[data-pc-theme="dark"] .table tbody td,
+[data-pc-theme="dark"] .table tbody td {
+  border-color: #303f50;
+  color: #bfbfbf !important;
+}
+
+html.pc-dark .breadcrumb,
+html[data-pc-theme="dark"] .breadcrumb,
+[data-pc-theme="dark"] .breadcrumb {
+  background: transparent !important;
+}
+
+html.pc-dark .breadcrumb-item,
+html.pc-dark .breadcrumb-item a,
+html[data-pc-theme="dark"] .breadcrumb-item,
+html[data-pc-theme="dark"] .breadcrumb-item a,
+[data-pc-theme="dark"] .breadcrumb-item,
+[data-pc-theme="dark"] .breadcrumb-item a {
+  color: #748892 !important;
+}
+
+html.pc-dark .page-header,
+html.pc-dark .page-block,
+html[data-pc-theme="dark"] .page-header,
+html[data-pc-theme="dark"] .page-block,
+[data-pc-theme="dark"] .page-header,
+[data-pc-theme="dark"] .page-block {
+  background: transparent !important;
+  color: #bfbfbf !important;
+}
+
+html.pc-dark .row,
+html[data-pc-theme="dark"] .row {
+  --bs-body-color: #bfbfbf;
+}
+
+html.pc-dark .card-body,
+[data-pc-theme="dark"] .card-body {
+  background-color: #1b232d !important;
+  color: #bfbfbf !important;
+}
+
+html.pc-dark .alert-info,
+html[data-pc-theme="dark"] .alert-info,
+[data-pc-theme="dark"] .alert-info {
+  background-color: #032830 !important;
+  border-color: #087990;
+  color: #6edff6 !important;
+}
+
+html.pc-dark .btn-outline-primary,
+html[data-pc-theme="dark"] .btn-outline-primary,
+[data-pc-theme="dark"] .btn-outline-primary {
+  border-color: #0d6efd;
+  color: #6ea8fe !important;
+}
+
+html.pc-dark .btn-outline-primary:hover,
+html[data-pc-theme="dark"] .btn-outline-primary:hover,
+[data-pc-theme="dark"] .btn-outline-primary:hover {
+  background-color: #0d6efd !important;
+  color: #fff !important;
+}
+
+html.pc-dark .statistics-card-1,
+[data-pc-theme="dark"] .statistics-card-1 {
+  background: #1b232d !important;
+  border-color: #303f50 !important;
+  color: #bfbfbf !important;
+}
+
+html.pc-dark .bg-brand-color-3,
+html[data-pc-theme="dark"] .bg-brand-color-3,
+[data-pc-theme="dark"] .bg-brand-color-3 {
+  opacity: 0.95;
+}
+
+/* Card header (Dashboard, Menu, etc.) */
+html.pc-dark .card-header,
+html[data-pc-theme="dark"] .card-header,
+[data-pc-theme="dark"] .card-header {
+  background-color: #19212a !important;
+  border-color: #303f50 !important;
+  color: #bfbfbf !important;
+}
+
+/* h2, h3, h5, h6 in content */
+html.pc-dark .pc-content h1,
+html.pc-dark .pc-content h2,
+html.pc-dark .pc-content h3,
+html.pc-dark .pc-content h4,
+html.pc-dark .pc-content h5,
+html.pc-dark .pc-content h6,
+html[data-pc-theme="dark"] .pc-content h1,
+html[data-pc-theme="dark"] .pc-content h2,
+html[data-pc-theme="dark"] .pc-content h3,
+html[data-pc-theme="dark"] .pc-content h4,
+html[data-pc-theme="dark"] .pc-content h5,
+html[data-pc-theme="dark"] .pc-content h6 {
+  color: #fafafa !important;
+}
+
+/* Layout-scoped dark: when .layout has theme (Dashboard, Restaurant, Settings, etc.) */
+.layout.pc-dark .pc-container,
+.layout.pc-dark .pc-content,
+.layout[data-pc-theme="dark"] .pc-container,
+.layout[data-pc-theme="dark"] .pc-content {
+  background-color: #131920 !important;
+  color: #bfbfbf !important;
+}
+
+.layout.pc-dark .card,
+.layout.pc-dark .card-body,
+.layout.pc-dark .card-header,
+.layout[data-pc-theme="dark"] .card,
+.layout[data-pc-theme="dark"] .card-body,
+.layout[data-pc-theme="dark"] .card-header {
+  background-color: #1b232d !important;
+  border-color: #303f50 !important;
+  color: #bfbfbf !important;
+}
+
+.layout.pc-dark .page-header,
+.layout.pc-dark .page-block,
+.layout.pc-dark .text-muted,
+.layout[data-pc-theme="dark"] .page-header,
+.layout[data-pc-theme="dark"] .page-block,
+.layout[data-pc-theme="dark"] .text-muted {
+  background: transparent !important;
+  color: #bfbfbf !important;
+}
+
+.layout.pc-dark .text-muted,
+.layout[data-pc-theme="dark"] .text-muted {
+  color: #748892 !important;
+}
+
+.layout.pc-dark .statistics-card-1,
+.layout[data-pc-theme="dark"] .statistics-card-1 {
+  background: #1b232d !important;
+  border-color: #303f50 !important;
+  color: #bfbfbf !important;
+}
+
+.layout.pc-dark .breadcrumb-item,
+.layout.pc-dark .breadcrumb-item a,
+.layout[data-pc-theme="dark"] .breadcrumb-item,
+.layout[data-pc-theme="dark"] .breadcrumb-item a {
+  color: #748892 !important;
+}
+
+.layout.pc-dark .pc-content h1,
+.layout.pc-dark .pc-content h2,
+.layout.pc-dark .pc-content h3,
+.layout.pc-dark .pc-content h4,
+.layout.pc-dark .pc-content h5,
+.layout.pc-dark .pc-content h6,
+.layout[data-pc-theme="dark"] .pc-content h1,
+.layout[data-pc-theme="dark"] .pc-content h2,
+.layout[data-pc-theme="dark"] .pc-content h3,
+.layout[data-pc-theme="dark"] .pc-content h4,
+.layout[data-pc-theme="dark"] .pc-content h5,
+.layout[data-pc-theme="dark"] .pc-content h6 {
+  color: #fafafa !important;
+}
