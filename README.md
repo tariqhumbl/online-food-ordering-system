@@ -1,164 +1,298 @@
-# Tailor Management App
+Online Food Ordering System
+Professional Project Documentation
+1. Project Overview
 
-This is a Tailor Management App built with Laravel 11 and Vue 3. The app allows tailors to manage their shops, customers, orders, measurements,  appointments and Invoice.
+Project Name: Online Food Ordering System
+Tech Stack:
 
-## Table of Contents
+Backend: Laravel 12 (REST API)
 
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Database](#database)
-- [Running the Application](#running-the-application)
-- [API Endpoints](#api-endpoints)
-- [Frontend](#frontend)
-- [License](#license)
+Frontend: Vue 3 (SPA) + Vite
 
-## Installation
+Database: MySQL / PostgreSQL
 
-1. Clone the repository:
+Architecture:
+RESTful API with a Single Page Application (SPA) frontend.
 
-    ```bash
-    git git clone https://Tariq_ullah@bitbucket.org/y-and-l-solutions/tailor-management.git
-    cd tailor-management
-    ```
+The Online Food Ordering System is a full-stack web application that enables users to browse restaurants, explore menus, place food orders, make payments, and track deliveries in real time.
 
-2. Install the dependencies:
+The platform also provides admin and vendor dashboards to manage menus, orders, customers, and system operations efficiently.
 
-    ```bash
-    composer install
-    npm install
-    ```
+2. Objectives
 
-3. Copy the `.env.example` file to `.env`:
+Provide a seamless and user-friendly online food ordering experience
 
-    ```bash
-    cp .env.example .env
-    ```
+Enable restaurant owners to manage menus and orders
 
-4. Generate the application key:
+Allow admins to control users, restaurants, and reports
 
-    ```bash
-    php artisan key:generate
-    ```
+Support real-time order status tracking
 
-## Configuration
+Integrate secure online payment systems
 
-1. Update the `.env` file with your database configuration:
+Ensure scalability and high performance
 
-    ```env
-    APP_KEY=base64:____________
+3. User Roles
+1. Customer
 
-    DB_CONNECTION=mysql
-    DB_HOST=127.0.0.1
-    DB_PORT=3306
-    DB_DATABASE=tailor-app
-    DB_USERNAME=root
-    DB_PASSWORD=
-    ```
-    ```mailtrap
-    MAIL_MAILER=smtp
-    MAIL_SCHEME=null
-    MAIL_HOST=sandbox.smtp.mailtrap.io
-    MAIL_PORT=2525
-    MAIL_USERNAME=40b19f36dcbf70
-    MAIL_PASSWORD=22778b64b41bf1
-    MAIL_FROM_ADDRESS="hello@example.com"
-    MAIL_FROM_NAME="${APP_NAME}"
+Browse restaurants and menus
 
-2. Set up other necessary environment variables as needed.
+Add items to cart
 
-## Database
+Place orders and make payments
 
-1. Run the database migrations:
+Track order status
 
-    ```bash
-    php artisan migrate
-    ```
+2. Restaurant / Vendor
 
-2. (Optional) Seed the database with initial data:
+Manage menu categories and items
 
-    ```bash
-    php artisan db:seed
-    ```
+Accept or reject orders
 
-## Running the Application
+Update order preparation status
 
-1. Start the Laravel development server:
+3. Admin
 
-    ```bash
-    php artisan serve
-    ```
+Manage users and restaurants
 
-2. Start the Vue development server:
+Monitor system activities
 
-    ```bash
-    npm run dev
-    ```
+Generate reports and analytics
 
-3. Open your browser and navigate to `http://localhost:8000`.
+4. Delivery Rider (Optional)
 
-## API Endpoints
+View assigned deliveries
 
-Here are some of the main API endpoints available in the application:
+Update delivery status
 
-- **Authentication** (Hight Priority)
-  - `POST /api/register` - Register a new user
-  - `POST /api/auth/login` - Login for existing users
-  - `POST /api/auth/reset-password-request` - Rest  password request (Forgot Password)
-  - `POST /api/auth/reset-password` - Complete password reset
-  - `POST /api/change-password` - Complete password change
-  - `Get /api/profile` - Authenticated user information
-  - `Put /api/auth/profile` - Authenticated user information updated
-  - `Get /api/auth/logout` - Authenticated user logout
+4. Core Modules
 
-- **Admin Dashboard** (Hight Priority)
-  - `GET /api/admin/get-all-user-list` - List all users
-  - `resource /api/admin/tailor-shop` - create, get, update and delete tailor shop
-  - `resource /api/admin/tailors` - Create a new Tailor, assign into specific shop and send credentials via email,
-  - `PUT /api/admin/change-tailor-shop/{id}` - Change Tailor Shop 
-  - `resource /api/admin/tailors/{id}` - Delete a tailor (user) Account
+Authentication & Authorization
 
-- **User Dashboard / Customer Management** (Hight Priority)
-  - `resource /api/user/profile` - user profile
-  - `resource /api/user/customer-information` - create, get, update and delete customer information
-  - `get /api/user/customer-orders/{id}` -  (Fetch orders for a customer)
+Restaurant Management
 
- - **User Dashboard / measurements Management** (Hight Priority)
-  - `resource /api/user/measurements` -   create, get, update and delete customer  measurements
+Menu Management
 
-- **User Dashboard / Order Management**  (Hight Priority)
-  - `resource /api/user/orders` - create, get, update and delete
-  - `GET /api/user/get-tailor-user` - Get details of a specific order
+Cart & Checkout System
 
+Order Management
 
-- **User Dashboard / Appointment Scheduling** (Hight Priority)
-  - `resource /api/user/appointments` - create, get, update and delete appointment
+Payment Integration
 
-- **Tailor Dashboard/ Invoice Management** (Hight Priority)
-  - `GET /api/tailor/invoices` - create, get and delete invoices
-  - `GET /api/invoice/{id}` - Get details of a specific Invoice
-  - `GET /api/tailor/register-user` - Tailor Manage user, create and delete
-  - `resource /api/tailor/appointments` - tailor get user appointment ( Low Priority, pending)
-  - `resource /api/tailor/orders` - tailor get user Orders (Low Priority, pending) 
- 
- - **Inventory Management**  (Low Priority)
-  - `resource /api/inventories` - create, get, update and delete Inventory
+Notifications (Email / SMS / Push)
 
-  - **Reports & Analytics**  (Low Priority)
-  - `resource /api/reports` - create, get, update and delete Reports
- 
- - **Notifications System**  (Low Priority)
-  - `resource /api/notifications` - create, get, update and delete Notifications
+Admin Dashboard & Reporting
 
-   - **Settings & Backup System**  (Low Priority)
-  - `resource /api/settings` - create, get, update and delete Settings
-  - `resource /api/backup` - create, get, update and delete backup
-  - `resource /api/restore` - create, get, update and delete restore
+5. System Architecture
+Frontend (Vue 3 SPA)
+        |
+        |  Axios API Requests
+        |
+Laravel REST API
+        |
+Database (MySQL / PostgreSQL)
 
+Authentication handled using Laravel Sanctum / JWT.
 
+6. Backend (Laravel) Structure
+6.1 Folder Structure
+app/
+ ├── Models
+ ├── Http/Controllers/API
+ ├── Services
+routes/
+ └── api.php
+database/
+ └── migrations
+Key Directories
+Folder	Purpose
+app/Models	Eloquent database models
+app/Http/Controllers/API	API controllers
+app/Services	Business logic layer
+routes/api.php	API routes
+database/migrations	Database schema
+6.2 Key Models
 
-## Frontend
+User
 
-The frontend of the application is built with Vue 3. To start the development server, run:
+Restaurant
 
-```bash
+MenuCategory
+
+MenuItem
+
+Order
+
+OrderItem
+
+Payment
+
+7. Frontend (Vue 3) Structure
+7.1 Folder Structure
+resources/js/
+ ├── components
+ ├── views
+ ├── router
+ ├── store
+ ├── services
+Folder	Description
+components	Reusable UI components
+views	Page views
+router	Vue Router configuration
+store	State management (Vuex / Pinia)
+services	API service calls
+7.2 Key Pages
+
+Home Page
+
+Restaurant List
+
+Menu View
+
+Cart Page
+
+Checkout Page
+
+Order Tracking
+
+Admin Dashboard
+
+8. Development Flow
+Phase 1 — Planning & Design
+
+Requirement gathering
+
+Define user roles
+
+Design wireframes
+
+Database schema design (ERD)
+
+Phase 2 — Backend Development (Laravel)
+
+Setup Laravel project
+
+Configure database and authentication
+
+Create migrations and models
+
+Build REST APIs
+
+Secure routes with middleware
+
+Implement business logic
+
+Phase 3 — Frontend Development (Vue 3)
+
+Setup Vue 3 with Vite
+
+Configure Vue Router
+
+Setup state management
+
+Create reusable components
+
+Connect APIs using Axios
+
+Handle authentication and state
+
+Phase 4 — Integration
+
+Connect Vue frontend with Laravel APIs
+
+Test full ordering flow
+
+Implement validation and error handling
+
+Phase 5 — Testing
+
+Unit testing (Laravel PHPUnit)
+
+API testing
+
+UI testing
+
+Phase 6 — Deployment
+
+Build frontend assets
+
+Optimize backend
+
+Configure server environment
+
+Setup CI/CD pipeline
+
+9. Security & Performance
+
+Laravel Sanctum / JWT Authentication
+
+Input Validation
+
+API Rate Limiting
+
+Redis Caching
+
+Queue Jobs for Emails and Notifications
+
+10. Future Enhancements
+
+Mobile App (Flutter / React Native)
+
+AI-based food recommendations
+
+Live chat support
+
+Multi-language support
+
+Advanced analytics dashboard
+
+11. Installation Guide
+
+Follow these steps to set up the project locally.
+
+1️⃣ Clone the Repository
+git clone https://github.com/your-repo/online-food-ordering-system.git
+cd online-food-ordering-system
+2️⃣ Install Backend Dependencies
+composer install
+composer update
+3️⃣ Install Frontend Dependencies
+npm install
+4️⃣ Environment Configuration
+
+Create .env file from the example file.
+
+cp .env.example .env
+
+Generate application key.
+
+php artisan key:generate
+5️⃣ Database Setup
+
+Create a database in MySQL.
+
+Example:
+
+Database Name: online_food_ordering
+
+Then update .env:
+
+DB_DATABASE=online_food_ordering
+DB_USERNAME=root
+DB_PASSWORD=
+
+Run migrations:
+
+php artisan migrate
+6️⃣ Run the Application
+
+Start Laravel server:
+
+php artisan serve
+
+Run frontend development server:
+
 npm run dev
+12. Conclusion
+
+The Online Food Ordering System is a scalable and modern web platform built using Laravel 12 and Vue 3 SPA architecture. It provides a complete solution for managing online food ordering operations with secure APIs, efficient database management, and a responsive user interface.
