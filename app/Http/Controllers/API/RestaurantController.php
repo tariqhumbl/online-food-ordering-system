@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Mail\ManagerCredentialsMail;
+use App\Mail\RestaurantApprovedMail;
 use App\Models\Restaurant;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -85,7 +86,7 @@ class RestaurantController extends Controller
 
         $data = $request->only(['name', 'slug', 'address', 'phone', 'email', 'description', 'delivery_fee', 'estimated_delivery_minutes']);
         $data['user_id'] = $manager->id;
-        $data['status'] = 'pending';
+        $data['status'] = 'active';
 
         $restaurant = Restaurant::create($data);
         $manager->update(['restaurant_id' => $restaurant->id]);
@@ -153,7 +154,27 @@ class RestaurantController extends Controller
             'estimated_delivery_minutes' => 'nullable|integer|min:0',
         ]);
 
+        $oldStatus = $restaurant->status;
         $restaurant->update($request->only(['name', 'slug', 'address', 'phone', 'email', 'description', 'status', 'delivery_fee', 'estimated_delivery_minutes']));
+
+        if (
+            $request->user()->role_id == 1
+            && $request->has('status')
+            && $request->status === 'active'
+            && $oldStatus === 'pending'
+            && $restaurant->user
+        ) {
+            try {
+                Mail::to($restaurant->user->email)->send(new RestaurantApprovedMail([
+                    'name' => $restaurant->user->name,
+                    'restaurant_name' => $restaurant->name,
+                    'login_url' => rtrim(config('app.url'), '/') . '/login',
+                ]));
+            } catch (\Throwable $e) {
+                \Log::warning('Restaurant approval email failed: ' . $e->getMessage());
+            }
+        }
+
         return response()->json($restaurant);
     }
 

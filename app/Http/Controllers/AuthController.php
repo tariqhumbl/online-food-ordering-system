@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Restaurant;
+use App\Models\Notification;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MailResetPasswordRequest;
@@ -39,6 +42,80 @@ class AuthController extends Controller
                 'message' => 'Some error occurred, please try again',
             ], 500);
         }
+    }
+
+    /**
+     * Public restaurant partner signup. Creates a vendor account and pending restaurant
+     * for admin review. Manager can log in only after admin approves the restaurant.
+     */
+    public function registerRestaurant(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:191|unique:users,email',
+            'password' => 'required|string|min:6|confirmed',
+            'restaurant_name' => 'required|string|max:255',
+            'address' => 'nullable|string|max:500',
+            'phone' => 'nullable|string|max:20',
+            'restaurant_email' => 'nullable|email|max:255',
+            'description' => 'nullable|string|max:2000',
+        ]);
+
+        $restaurant = DB::transaction(function () use ($request) {
+            $manager = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role_id' => 2,
+            ]);
+
+            $slug = $this->uniqueRestaurantSlug($request->restaurant_name);
+
+            $restaurant = Restaurant::create([
+                'user_id' => $manager->id,
+                'name' => $request->restaurant_name,
+                'slug' => $slug,
+                'address' => $request->address,
+                'phone' => $request->phone,
+                'email' => $request->restaurant_email,
+                'description' => $request->description,
+                'status' => 'pending',
+            ]);
+
+            $manager->update(['restaurant_id' => $restaurant->id]);
+
+            $admins = User::where('role_id', 1)->get();
+            foreach ($admins as $admin) {
+                Notification::createForUser(
+                    $admin->id,
+                    'restaurant_registration',
+                    'New restaurant signup',
+                    "{$restaurant->name} has registered and is awaiting approval.",
+                    ['restaurant_id' => $restaurant->id, 'restaurant_name' => $restaurant->name]
+                );
+            }
+
+            return $restaurant;
+        });
+
+        return response()->json([
+            'message' => 'Your restaurant application has been submitted. You will receive an email once an admin approves your account.',
+            'restaurant' => $restaurant->only(['id', 'name', 'slug', 'status']),
+        ], 201);
+    }
+
+    private function uniqueRestaurantSlug(string $name): string
+    {
+        $slug = Str::slug($name);
+        if ($slug === '') {
+            $slug = 'restaurant';
+        }
+        $original = $slug;
+        $i = 1;
+        while (Restaurant::where('slug', $slug)->exists()) {
+            $slug = $original . '-' . $i++;
+        }
+        return $slug;
     }
 
     // user login
@@ -101,6 +178,27 @@ class AuthController extends Controller
         }
 
         $user = $request->user();
+
+        if ($user->role_id == 2) {
+            $restaurant = $user->restaurant_id
+                ? Restaurant::find($user->restaurant_id)
+                : Restaurant::where('user_id', $user->id)->first();
+
+            if (!$restaurant || $restaurant->status !== 'active') {
+                Auth::logout();
+                $message = !$restaurant
+                    ? 'No restaurant is linked to your account. Please contact support.'
+                    : ($restaurant->status === 'pending'
+                        ? 'Your restaurant application is pending admin approval. You will receive an email when approved.'
+                        : 'Your restaurant account is not active. Please contact support.');
+
+                return response()->json([
+                    'message' => $message,
+                    'error_code' => 403,
+                ], 403);
+            }
+        }
+
         $user->tokens()->delete();
 
         if ($user->role_id == 1) {

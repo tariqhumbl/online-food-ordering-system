@@ -24,6 +24,9 @@ export function login(credentials) {
 export function register(user) {
     return http().post('/api/auth/registerUser', user);
 }
+export function registerRestaurant(data) {
+    return http().post('/api/auth/registerRestaurant', data);
+}
 export function forgotPassword(user) {
     return http().post('/api/auth/forgot-request', user);
 }

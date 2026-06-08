@@ -20,7 +20,7 @@
         </div>
       </div>
     </div>
-    <p class="text-muted mb-4">Manage all restaurants in the system.</p>
+    <p class="text-muted mb-4">Manage all restaurants in the system. Self-registered restaurants appear as <span class="badge bg-warning">pending</span> until you approve them.</p>
 
     <!-- Filters -->
     <div class="card mb-4">
@@ -90,6 +90,15 @@
                 <td>{{ r.delivery_fee != null ? formatMoney(r.delivery_fee) : '—' }}</td>
                 <td>{{ r.user ? r.user.name : '—' }}</td>
                 <td>
+                  <button
+                    v-if="r.status === 'pending'"
+                    type="button"
+                    class="btn btn-sm btn-success me-1"
+                    :disabled="approvingId === r.id"
+                    @click="approveRestaurant(r)"
+                  >
+                    {{ approvingId === r.id ? '...' : 'Approve' }}
+                  </button>
                   <button type="button" class="btn btn-sm btn-outline-primary me-1" @click="openEditModal(r)">
                     Edit
                   </button>
@@ -264,6 +273,7 @@ export default {
     const isEditing = ref(false);
     const editingId = ref(null);
     const restaurantToDelete = ref(null);
+    const approvingId = ref(null);
 
     const filters = reactive({
       search: '',
@@ -439,6 +449,22 @@ export default {
         .finally(() => (saving.value = false));
     }
 
+    function approveRestaurant(r) {
+      approvingId.value = r.id;
+      API.restaurants
+        .update(r.id, { status: 'active' })
+        .then(() => {
+          toast.success(`${r.name} approved. The manager will receive a login email.`);
+          loadRestaurants();
+        })
+        .catch((err) => {
+          toast.error(err.response?.data?.message || 'Failed to approve restaurant.');
+        })
+        .finally(() => {
+          approvingId.value = null;
+        });
+    }
+
     function confirmDelete(r) {
       restaurantToDelete.value = r;
       deleteModalBs = deleteModalBs || new Modal(deleteModal.value);
@@ -490,6 +516,8 @@ export default {
       debouncedLoad,
       confirmDelete,
       performDelete,
+      approveRestaurant,
+      approvingId,
       formatMoney,
       statusBadgeClass,
     };

@@ -145,6 +145,8 @@ export default {
                 state.errors = error.response?.data?.errors || {};
                 if (error.response?.status === 422) {
                     toast.error("Invalid email or password");
+                } else if (error.response?.status === 403) {
+                    toast.warning(error.response?.data?.message || "Your account is not approved yet.");
                 } else {
                     toast.error(error.response?.data?.message || "Some error occurred, Please try again.");
                 }

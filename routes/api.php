@@ -19,6 +19,7 @@ use App\Http\Controllers\API\RiderController;
 
 Route::prefix('auth')->group(function () {
     Route::post('registerUser', [AuthController::class, 'registerUser']);
+    Route::post('registerRestaurant', [AuthController::class, 'registerRestaurant']);
     Route::post('login', [AuthController::class, 'login']);
     Route::post('forgot-request', [AuthController::class, 'resetPasswordRequest']);
     Route::post('reset-password', [AuthController::class, 'resetPassword']);

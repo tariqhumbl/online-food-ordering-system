@@ -131,7 +131,7 @@
                 <span><i class="ph-duotone ph-truck"></i> {{ r.delivery_fee != null ? formatMoney(r.delivery_fee) : 'Free' }} · {{ r.estimated_delivery_minutes || '—' }} min</span>
               </div>
               
-              <router-link to="#" class="landing-btn landing-btn-primary landing-btn-block">
+              <router-link :to="`/restaurant/${r.id}`" class="landing-btn landing-btn-primary landing-btn-block">
                 <i class="ph-duotone ph-shopping-cart"></i>
                 View menu & add to cart
               </router-link>
@@ -164,6 +164,7 @@
           <div class="landing-footer-links">
             <router-link to="/login">Login</router-link>
             <router-link to="/register">Register</router-link>
+            <router-link to="/register?type=restaurant">List your restaurant</router-link>
             <a href="#restaurants">Restaurants</a>
           </div>
         </div>
